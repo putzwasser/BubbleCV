@@ -305,8 +305,9 @@
 % Contains information about the event.
 % Parameter 1 (optional):   Start date of the event.
 % Parameter 2 (optional):   End date of the event.
-% Parameter 3:              Content.
-\NewDocumentEnvironment{cvevent}{O{} O{} +b}{%
+% Parameter 3 (optional):   Connecting symbol between dates. Defaults to `$\uparrow$`
+% Parameter 4:              Content.
+\NewDocumentEnvironment{cvevent}{O{} O{} O{} +b}{%
     \ifthenelse{\equal{\iscvsidebar}{0}}{%
         \hspace{-\cveventbubbleradius mm}%
         \hspace{-\timelinespace mm}%
@@ -319,7 +320,11 @@
                     }%
                 }{%
                     \textbf{#2}\par%
-                    \textbf{$\uparrow$}\par%
+                    \ifthenelse{\equal{#3}{}}{%
+                        \textbf{$\uparrow$}\par%
+                    }{%
+                        \textbf{#3}\par%
+                    }%
                     \textbf{#1}%
                 }%
             \end{center}%
@@ -329,9 +334,8 @@
         \end{minipage}%
         \hspace{\dimexpr(\timelinespace mm - \cveventbubbleradius mm)}%
         \begin{minipage}[t]{\linewidth}%
-            #3%
+            #4%
         \end{minipage}%
-        \par%
     }{%
         \PackageError{\packagename}{The cvevent can be used only in the main column}{}%
     }%
